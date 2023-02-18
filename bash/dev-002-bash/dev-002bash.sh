@@ -3,8 +3,8 @@
 GREEN="\033[0;32m"
 RED='\033[0;31m'
 
-NUMBER=10
-INTERVAL=15
+NUMBER=12
+INTERVAL=5
 SUCCESS=1
 
 function help {
@@ -29,15 +29,18 @@ function check_number {
 }
 
 if [[ $# -eq 0 ]]; then
+  echo -e "\033[0;31mEnter a Command\033[0m"
   help
-  exit 1
+  exit 0
 fi
 
 while [[ $# -ne 0 ]]; do
   case $1 in
   -n)
+    unset TRY_NUMBER
     check_number $2
     if [[ $? -ne 0 ]]; then
+      echo -e "\033[0;31mEnter Try Number\033[0m"
       help
       exit 1
     fi
@@ -45,8 +48,10 @@ while [[ $# -ne 0 ]]; do
     shift 2
     ;;
   -i)
+    unset TRY_INTERVAL
     check_number $2
     if [[ $? -ne 0 ]]; then
+      echo -e "\033[0;31mEnter Try Interval\033[0m"
       help
       exit 1
     fi
@@ -61,8 +66,21 @@ while [[ $# -ne 0 ]]; do
 done
 
 if [[ -z $COMMAND ]]; then
+  echo -e "\033[0;31mEnter a Command\033[0m"
   help
-  exit 1
+  exit 0
+fi
+
+# ENVIORMENT VARIABLE
+set TRY_INTERVAL
+set TRY_NUMBER
+
+# Validate ENV or Set Default
+if [ ! -z $TRY_INTERVAL ]; then
+  INTERVAL=$TRY_INTERVAL
+fi
+if [ ! -z $TRY_NUMBER ]; then
+  NUMBER=$TRY_NUMBER
 fi
 
 for i in $(seq 1 $NUMBER); do
