@@ -31,7 +31,7 @@ function check_number {
 if [[ $# -eq 0 ]]; then
   echo -e "\033[0;31mEnter a Command\033[0m"
   help
-  exit 0
+  exit 1
 fi
 
 while [[ $# -ne 0 ]]; do
@@ -68,7 +68,7 @@ done
 if [[ -z $COMMAND ]]; then
   echo -e "\033[0;31mEnter a Command\033[0m"
   help
-  exit 0
+  exit 1
 fi
 
 # ENVIORMENT VARIABLE
